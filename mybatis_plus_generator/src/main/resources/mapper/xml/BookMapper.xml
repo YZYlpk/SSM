@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.mybatis_plus_generator.dao.BookDao">
+    <insert id="insert1">
+        insert into tbl_book (id,type,name,description)
+        values(#{id},#{type},#{name},#{description})
+    </insert>
+
+    <update id="update1">
+        update tbl_book
+        set type=#{type},name=#{name},description=#{description}
+        where id=#{id}
+    </update>
+    <select id="select" resultType="com.itheima.mybatis_plus_generator.entity.Book">
+        select *
+        from tbl_book
+    </select>
+    <select id="selectOne" resultType="com.itheima.mybatis_plus_generator.entity.Book">
+        select *
+        from tbl_book
+        where id=#{id}
+    </select>
+    <select id="count1" resultType="java.lang.Integer">
+        select count(*)
+        from tbl_book
+    </select>
+
+
+</mapper>

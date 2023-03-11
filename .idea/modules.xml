@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/mybatis_plus_generator/mybatis_plus_generator.iml" filepath="$PROJECT_DIR$/mybatis_plus_generator/mybatis_plus_generator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot_08_ssmp/springboot_08_ssmp.iml" filepath="$PROJECT_DIR$/springboot_08_ssmp/springboot_08_ssmp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/代码生成器.iml" filepath="$PROJECT_DIR$/.idea/代码生成器.iml" />
+    </modules>
+  </component>
+</project>
