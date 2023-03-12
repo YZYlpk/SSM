@@ -28,7 +28,7 @@ public class BookServiceTestCase {
     @Test
     public void testUpdate() {
         Book book = new Book();
-        book.setId(16);
+        book.setId(15);
         book.setName("神秘岛");
         book.setType("科幻1");
         book.setDescription("《神秘岛》是法国科幻小说家儒勒·凡尔纳创作的长篇小说。");
@@ -52,7 +52,7 @@ public class BookServiceTestCase {
 
     @Test
     public void getPage() {
-        IPage<Book> page = bookService.getPage(2, 5);
+        IPage<Book> page = bookService.getPage(5, 5);
         System.out.println("page.getCurrent() = " + page.getCurrent());
         System.out.println("page.getPages() = " + page.getPages());
         System.out.println("page.getTotal() = " + page.getTotal());

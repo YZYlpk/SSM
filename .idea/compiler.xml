@@ -21,7 +21,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="mybatis_plus_SpringBoot" options="-parameters" />
       <module name="mybatis_plus_generator" options="-parameters" />
-      <module name="springboot_08_ssmp" options="-parameters" />
+      <module name="springboot_08_ssmp" options="" />
     </option>
   </component>
 </project>
