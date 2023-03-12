@@ -119,8 +119,6 @@ public class BookController {
         Book req1= JSON.parseObject(JSON.toJSONString(req.get("Book")),Book.class);
         //插入新数据
         if(bookService.insert1(req1)!=0){
-            //查询新增的数据 因为不是用MP自带的方法插入，所以如果req没给id，就不能用selectOne方法通过id查询
-            Book rsp=bookService.selectOne(req1.getId());
             return new R(FlagEnum.INSERT_SUCCESS.getStatus(), FlagEnum.INSERT_SUCCESS.getMessage());
         }
         else

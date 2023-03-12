@@ -62,6 +62,7 @@ public class BookServiceImpl extends ServiceImpl<BookDao, Book> implements IBook
                     BeanUtils.copyProperties(e, bookDto);
                     return bookDto;
                 }).collect(Collectors.toList());//将收集到的信息存储到一个List集合
+                map.put("数量",listBookDto.size());
                 map.put("数据", listBookDto);
                 mapList.add(map);
             }
