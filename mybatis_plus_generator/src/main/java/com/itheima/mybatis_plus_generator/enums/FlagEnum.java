@@ -10,7 +10,7 @@ import lombok.Getter;
 public enum FlagEnum {
     //通用输出格式
     SUCCESS("success","成功"),
-    ERROR("error","查询失败"),
+    ERROR("error","未知错误"),
 
     //详细输出格式
     SELECT_SUCCESS("success","查询成功"),

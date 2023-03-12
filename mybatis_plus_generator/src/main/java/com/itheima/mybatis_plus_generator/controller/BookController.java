@@ -5,6 +5,7 @@ package com.itheima.mybatis_plus_generator.controller;
 import com.alibaba.fastjson.JSON;
 import com.itheima.mybatis_plus_generator.entity.Book;
 import com.itheima.mybatis_plus_generator.enums.FlagEnum;
+import com.itheima.mybatis_plus_generator.exceptino.GlobalException;
 import com.itheima.mybatis_plus_generator.service.impl.BookServiceImpl;
 
 
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -64,14 +64,14 @@ public class BookController {
 
     //查询所有数据并按类型分类
     @RequestMapping("/selectByType")
-    public R selectByType(){
+    public R selectByType() throws GlobalException {
         List<Map<String,Object>> rsp=bookService.selectByType();
         //用枚举类输出返回数据格式
         return new R(FlagEnum.SELECT_SUCCESS.getStatus(), FlagEnum.SELECT_SUCCESS.getMessage(),rsp);
     }
     //查询一个
     @PostMapping("/selectone")
-    public R selectOne(@RequestParam("id") Integer id){
+    public R selectOne(@RequestParam("id") Integer id) throws GlobalException {
         Book rsp=bookService.selectOne(id);
         //用枚举类输出返回数据格式
         return new R(FlagEnum.SELECT_SUCCESS.getStatus(), FlagEnum.SELECT_SUCCESS.getMessage(),rsp);
@@ -93,30 +93,24 @@ public class BookController {
 
     //更新2（MP自带的updateById方法）
     @RequestMapping(value = "/update2")
-    public R update2(@RequestBody Map<String,Object> req){
+    public R update2(@RequestBody Map<String,Object> req) throws GlobalException {
         Book req1= JSON.parseObject(JSON.toJSONString(req.get("Book")),Book.class);
         //更新图书
-        String str=bookService.update2(req1);
-        System.err.println(str);
+        bookService.update2(req1);
         //查询更新后的图书
         Book rsp=bookService.selectOne(req1.getId());
-        Map<String,Object> map=new HashMap<>();
-        map.put(str,rsp);
-        return R.ok().data(rsp);//用R的静态方法ok（）输出通用格式
+        return R.ok().data(rsp);//用R的静态方法ok（）输出通用成功格式,用GlobalException抛异常输出通用失败格式
     }
 
     //更新3（MP自带的update方法）
     @RequestMapping(value = "/update3")
-    public R update3(@RequestBody Map<String,Object> req){
+    public R update3(@RequestBody Map<String,Object> req) throws GlobalException {
         Book req1= JSON.parseObject(JSON.toJSONString(req.get("Book")),Book.class);
         //更新图书
-        String str=bookService.update3(req1);
-        System.err.println(str);
+        bookService.update3(req1);
         //查询更新后的图书
         Book rsp=bookService.selectOne(req1.getId());
-        Map<String,Object> map=new HashMap<>();
-        map.put(str,rsp);
-        return R.ok().data(rsp);//用R的静态方法ok（）输出通用格式
+        return R.ok().data(rsp);//用R的静态方法ok（）输出通用格式,用GlobalException抛异常输出通用失败格式
     }
 
     //新增图书1（mybatis-dao层用sql处理）
@@ -125,28 +119,40 @@ public class BookController {
         Book req1= JSON.parseObject(JSON.toJSONString(req.get("Book")),Book.class);
         //插入新数据
         if(bookService.insert1(req1)!=0){
-            //查询新增的数据
+            //查询新增的数据 因为不是用MP自带的方法插入，所以如果req没给id，就不能用selectOne方法通过id查询
             Book rsp=bookService.selectOne(req1.getId());
-            return new R(FlagEnum.INSERT_SUCCESS.getStatus(), FlagEnum.INSERT_SUCCESS.getMessage(),rsp);
+            return new R(FlagEnum.INSERT_SUCCESS.getStatus(), FlagEnum.INSERT_SUCCESS.getMessage());
         }
         else
-            return new R(FlagEnum.INSERT_ERROR.getStatus(), FlagEnum.INSERT_ERROR.getMessage(),null);//用枚举类输出返回数据格式
+            return new R(FlagEnum.INSERT_ERROR.getStatus(), FlagEnum.INSERT_ERROR.getMessage());//用枚举类输出返回数据格式
 
     }
 
     //新增图书2 (mybatis自带的insert方法)
     @RequestMapping(value = "/insert2")
-    public R insert2(@RequestBody Map<String,Object> req){
+    public R insert2(@RequestBody Map<String,Object> req) throws GlobalException {
         Book req1= JSON.parseObject(JSON.toJSONString(req.get("Book")),Book.class);
         //插入新数据
-        String str=bookService.insert2(req1);
-        //查询新增的数据
+        bookService.insert2(req1);
+        //查询新增的数据 即使req没给id，用了MP自带的方法插入后会自动给req的id赋值，所以可以用selectOne方法通过id查询
         Book rsp=bookService.selectOne(req1.getId());
-        Map<String,Object> map=new HashMap<>();
-        map.put(str,rsp);
-        return R.ok().data(rsp);//用R的静态方法ok（）输出通用格式
+        return R.ok().data(rsp);//用R的静态方法ok（）输出通用格式,用GlobalException抛异常输出通用失败格式
     }
 
-    //删除图书
+
+    //删除图书 (mybatis-dao层用sql处理)
+    @RequestMapping("/delete1")
+    public R delete1(@RequestParam("id") Integer id) throws GlobalException {
+        bookService.delete1(id);
+        return R.ok();
+    }
+
+
+    //删除图书 (MP自带的deleteById方法)
+    @RequestMapping("/delete2")
+    public R delete2(@RequestParam("id") Integer id) throws GlobalException {
+        bookService.delete2(id);
+        return R.ok();
+    }
 }
 

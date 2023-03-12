@@ -11,6 +11,11 @@
         set type=#{type},name=#{name},description=#{description}
         where id=#{id}
     </update>
+    <delete id="delete1">
+        DELETE FROM tbl_book
+        WHERE `id` = #{id}
+    </delete>
+
     <select id="select" resultType="com.itheima.mybatis_plus_generator.entity.Book">
         select *
         from tbl_book

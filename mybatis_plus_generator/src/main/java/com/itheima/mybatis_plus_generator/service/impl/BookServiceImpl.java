@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.itheima.mybatis_plus_generator.dto.BookDto;
 import com.itheima.mybatis_plus_generator.entity.Book;
 import com.itheima.mybatis_plus_generator.dao.BookDao;
+import com.itheima.mybatis_plus_generator.exceptino.GlobalException;
 import com.itheima.mybatis_plus_generator.service.IBookService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
@@ -38,11 +39,14 @@ public class BookServiceImpl extends ServiceImpl<BookDao, Book> implements IBook
         return map;
     }
 
-    public List<Map<String,Object>> selectByType() {
+    public List<Map<String,Object>> selectByType() throws GlobalException {
         List<Book> rsp = bookDao.select();
         List<Map<String, Object>> mapList = null;
         if (rsp.isEmpty())
+        {
             System.out.println("数据为空");
+            throw new GlobalException();
+        }
         else {
             mapList = new ArrayList<>();
             //取出所有去重后的type，放到Set集合
@@ -74,7 +78,7 @@ public class BookServiceImpl extends ServiceImpl<BookDao, Book> implements IBook
         return bookDao.update1(req.getId(),req.getType(),req.getName(),req.getDescription());
     }
 
-    public String update2(Book req){
+    public void update2(Book req) throws GlobalException {
         String str=null;
         Book book= Book.builder()
                 .id(req.getId())
@@ -84,14 +88,17 @@ public class BookServiceImpl extends ServiceImpl<BookDao, Book> implements IBook
                 .build();
         //根据id修改其他字段
         Integer result=bookDao.updateById(book);
-        if(result.equals(1))
+        if(result.equals(1)) {
             str = "数据更新成功";
+            System.out.println(str);
+        }
         else if (result.equals(0)) {
             str = "数据更新失败";
+            System.out.println(str);
+            throw new GlobalException();
         }
-        return str;
     }
-    public String update3(Book req){
+    public void update3(Book req) throws GlobalException {
         String str=null;
         Book book= Book.builder()
                 .name(req.getName())
@@ -104,13 +111,15 @@ public class BookServiceImpl extends ServiceImpl<BookDao, Book> implements IBook
 
 
         Integer result=bookDao.update(book,updateWrapper);//第一个参数为set条件，第二个参数为where条件。
-        if(result.equals(1))
+        if(result.equals(1)) {
             str = "数据更新成功";
-        else if (result.equals(0)) {
-            str = "数据更新失败";
+            System.out.println(str);
         }
-
-        return str;
+            else if (result.equals(0)) {
+            str = "数据更新失败";
+            System.out.println(str);
+            throw new GlobalException();
+        }
     }
 
     public Integer insert1(Book req){
@@ -121,26 +130,45 @@ public class BookServiceImpl extends ServiceImpl<BookDao, Book> implements IBook
         }
         else
         {
-            bookDao.insert1(req.getId(),req.getType(),req.getName(),req.getDescription());
+            Integer integer = bookDao.insert1(req.getId(), req.getType(), req.getName(), req.getDescription());
+            System.out.println(integer);
             System.err.println("已插入数据");
             return 1;
         }
 
     }
 
-    public String insert2(Book req){
+    public void insert2(Book req) throws GlobalException {
         String str=null;
         if(bookDao.selectOne(req.getId())!=null && !bookDao.selectOne(req.getId()).equals("")){
             str="id已被占用，数据插入失败";
             System.err.println(str);
+            throw new GlobalException();
         }
         else
         {
+            /**   MP自带的方法，插入数据没给id时，使用insert方法后，自动给req的id赋值  **/
+            //System.out.println(req.getId());
             bookDao.insert(req);
+            //System.out.println(req.getId());
             str="已插入数据";
             System.err.println(str);
         }
-        return str;
     }
 
+    public void delete1(Integer id) throws GlobalException {
+        //先判断是否有对应id的数据
+        if(bookDao.selectOne(id)==null || bookDao.selectOne(id).equals(""))
+            throw new GlobalException();
+        else
+            bookDao.delete1(id);
+    }
+
+    public void delete2(Integer id) throws GlobalException {
+        //先判断是否有对应id的数据
+        if(bookDao.selectOne(id)==null || bookDao.selectOne(id).equals(""))
+            throw new GlobalException();
+        else
+            bookDao.deleteById(id);
+    }
 }

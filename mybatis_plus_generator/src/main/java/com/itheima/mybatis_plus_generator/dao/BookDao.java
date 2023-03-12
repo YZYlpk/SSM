@@ -32,4 +32,6 @@ public interface BookDao extends BaseMapper<Book> {
     Integer update1(@Param("id") Integer id,@Param("type") String type,@Param("name")String name,@Param("description") String description);
 
     Integer insert1(@Param("id") Integer id,@Param("type") String type,@Param("name")String name,@Param("description") String description);
+
+    Integer delete1(@Param("id") Integer id);
 }
