@@ -38,9 +38,9 @@ public class Book implements Serializable {
 
     private String description;
 
-    //非数据库字段，用来计数
-    @TableField(exist = false)
-    private Integer count;
+//    //非数据库字段，用来计数
+//    @TableField(exist = false)
+//    private Integer count;
 
 
 

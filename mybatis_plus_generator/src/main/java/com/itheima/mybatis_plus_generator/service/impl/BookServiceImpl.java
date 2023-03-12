@@ -70,8 +70,8 @@ public class BookServiceImpl extends ServiceImpl<BookDao, Book> implements IBook
         return rsq;
     }
 
-    public void update1(Book req){
-        bookDao.update1(req.getId(),req.getType(),req.getName(),req.getDescription());
+    public Integer update1(Book req){
+        return bookDao.update1(req.getId(),req.getType(),req.getName(),req.getDescription());
     }
 
     public String update2(Book req){
@@ -113,14 +113,19 @@ public class BookServiceImpl extends ServiceImpl<BookDao, Book> implements IBook
         return str;
     }
 
-    public void insert1(Book req){
+    public Integer insert1(Book req){
         if(bookDao.selectOne(req.getId())!=null && !bookDao.selectOne(req.getId()).equals(""))
+        {
             System.err.println("id已被占用，数据插入失败");
+            return 0;
+        }
         else
         {
             bookDao.insert1(req.getId(),req.getType(),req.getName(),req.getDescription());
             System.err.println("已插入数据");
+            return 1;
         }
+
     }
 
     public String insert2(Book req){
