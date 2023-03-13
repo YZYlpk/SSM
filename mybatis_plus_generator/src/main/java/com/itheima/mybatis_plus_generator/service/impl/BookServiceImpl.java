@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itheima.mybatis_plus_generator.dto.BookDto;
 import com.itheima.mybatis_plus_generator.entity.Book;
 import com.itheima.mybatis_plus_generator.dao.BookDao;
-import com.itheima.mybatis_plus_generator.exceptino.GlobalException;
+import com.itheima.mybatis_plus_generator.exception.GlobalException;
 import com.itheima.mybatis_plus_generator.service.IBookService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 

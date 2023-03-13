@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.itheima.mybatis_plus_generator.entity.Book;
 import com.itheima.mybatis_plus_generator.enums.FlagEnum;
-import com.itheima.mybatis_plus_generator.exceptino.GlobalException;
+import com.itheima.mybatis_plus_generator.exception.GlobalException;
 import com.itheima.mybatis_plus_generator.service.IBookService;
 import com.itheima.mybatis_plus_generator.service.impl.BookServiceImpl;
 

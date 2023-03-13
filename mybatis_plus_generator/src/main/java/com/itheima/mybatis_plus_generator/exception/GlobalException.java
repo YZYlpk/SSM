@@ -1,4 +1,4 @@
-package com.itheima.mybatis_plus_generator.exceptino;
+package com.itheima.mybatis_plus_generator.exception;
 
 import com.itheima.mybatis_plus_generator.utils.R;
 import org.springframework.web.bind.annotation.ExceptionHandler;
