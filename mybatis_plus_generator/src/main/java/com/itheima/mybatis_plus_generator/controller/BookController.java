@@ -3,9 +3,11 @@ package com.itheima.mybatis_plus_generator.controller;
 
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.itheima.mybatis_plus_generator.entity.Book;
 import com.itheima.mybatis_plus_generator.enums.FlagEnum;
 import com.itheima.mybatis_plus_generator.exceptino.GlobalException;
+import com.itheima.mybatis_plus_generator.service.IBookService;
 import com.itheima.mybatis_plus_generator.service.impl.BookServiceImpl;
 
 
@@ -18,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 
-
 /**
  * <p>
  *  前端控制器
@@ -28,7 +29,7 @@ import java.util.Map;
  * @since 2023-03-08
  */
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/books")
 public class BookController {
     @Value("${spring.datasource.driver-class-name}")
     String drivername;
@@ -43,6 +44,8 @@ public class BookController {
     @Resource
     BookServiceImpl bookService;
 
+    @Resource
+    IBookService iBookService;
     //输出数据库相关配置
     @GetMapping("/{id}")
     public String getById(@PathVariable Integer id){
@@ -53,6 +56,7 @@ public class BookController {
         System.out.println(password);
         return "hello , spring boot!";
     }
+
 
     //查询所有数据并统计数量
     @PostMapping("/select")
@@ -76,6 +80,20 @@ public class BookController {
         //用枚举类输出返回数据格式
         return new R(FlagEnum.SELECT_SUCCESS.getStatus(), FlagEnum.SELECT_SUCCESS.getMessage(),rsp);
     }
+
+
+    /** ----------------------------------------------------------------- **/
+    //分页+模糊查询
+    @GetMapping("{currentPage}/{pageSize}")
+    public R getPage(@PathVariable int currentPage, @PathVariable int pageSize, Book book) {
+        IPage<Book> page = iBookService.getPage(currentPage, pageSize, book);
+        // 如果当前页面值大于总页码值，那么重新执行查询操作，使用最大页码值作为当前页码值
+        if (currentPage > page.getPages()) {
+            page = iBookService.getPage((int) page.getPages(), pageSize, book);
+        }
+        return  R.ok().data(page);
+    }
+
 
     //更新1（mybatis-dao层用sql处理）
     @RequestMapping(value = "/update1")
@@ -151,6 +169,20 @@ public class BookController {
     public R delete2(@RequestParam("id") Integer id) throws GlobalException {
         bookService.delete2(id);
         return R.ok();
+    }
+
+    /** ----------------------------------------------------------------- **/
+    @DeleteMapping("{id}")
+    public R delete(@PathVariable Integer id) {
+        boolean flag = iBookService.removeById(id);
+        if(flag) {
+            String str = "删除成功^_^";
+            return new R(FlagEnum.SUCCESS.getStatus(),str);
+        }
+        else {
+            String str = "删除失败-_-!";
+            return new R(FlagEnum.ERROR.getStatus(),str);
+        }
     }
 }
 

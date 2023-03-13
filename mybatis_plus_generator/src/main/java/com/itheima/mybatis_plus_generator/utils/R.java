@@ -18,6 +18,10 @@ public class R {
     public R() {
     }
 
+    public R(String msg) {
+        this.msg = msg;
+    }
+
     public R(String status, String msg) {
         this.status = status;
         this.msg = msg;

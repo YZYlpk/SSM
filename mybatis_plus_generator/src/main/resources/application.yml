@@ -17,6 +17,10 @@ mybatis-plus:
   type-aliases-package: com.itheima.mybatis_plus_generator.entity #实体类位置
   configuration:
     map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #输出sql日志到控制台
+  global-config:
+    db-config:
+      id-type: auto
 
 #当mapper接口和mapper和mapper接口对应的配置文件名称和路径不一样时(比如BookDao和BookMapper.xml)，需要配置mapper-locations绑定位置
 #mybatis:
