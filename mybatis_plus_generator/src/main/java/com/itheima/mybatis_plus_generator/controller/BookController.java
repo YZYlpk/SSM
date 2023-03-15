@@ -158,7 +158,7 @@ public class BookController {
 
     //删除图书 (mybatis-dao层用sql处理)
     @RequestMapping("/delete1")
-    public R delete1(@RequestParam("id") Integer id) throws GlobalException {
+    public R delete1(@RequestParam(value = "id") Integer id) throws GlobalException {
         bookService.delete1(id);
         return R.ok();
     }
