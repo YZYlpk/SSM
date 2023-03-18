@@ -69,7 +69,7 @@ public class BookController {
     @PostMapping("/select")
     public  R selectAll(){
         Map<String,Object> rsp=bookService.select();
-        System.out.println("热部署666");
+        //System.out.println("热部署666");
         //用枚举类输出返回数据格式
         return new R(FlagEnum.SELECT_SUCCESS.getStatus(), FlagEnum.SELECT_SUCCESS.getMessage(),rsp);
     }

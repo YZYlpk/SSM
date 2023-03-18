@@ -10,6 +10,9 @@ spring:
     username: root
     password: 123456
     type: com.alibaba.druid.pool.DruidDataSource
+  devtools:
+    restart:
+      enabled: false #设置热部署的开关
 
 #当mapper接口和mapper和mapper接口对应的配置文件名称和路径不一样时(比如BookDao和BookMapper.xml)，需要配置mapper-locations绑定位置
 mybatis-plus:
