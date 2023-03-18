@@ -37,4 +37,3 @@ logging:
     rolling policy:
       max-file-size: 10MB   #设置日志最大容量
       file-name-pattern: server.%d{yyyy-MM-dd}.%i.log #日志文件命名规则
-

@@ -68,6 +68,14 @@
             <artifactId>spring-boot-autoconfigure</artifactId>
             <version>2.4.0</version>
         </dependency>
+        <!--热部署 不停服更新 改完代码后只需要ctrl+F9，不需要重启-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <version>2.7.8</version>
+            <optional>true</optional>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -100,6 +108,9 @@
                 <version>2.3.7.RELEASE</version>
                 <configuration>
                     <mainClass>top.jacktgq.SSMPApplication</mainClass>
+                    <fork>true</fork>
+                    <skip>true</skip>
+                    <addResources>true</addResources>
                 </configuration>
 <!--                cmd命令行启动程序必备插件-->
                 <executions>

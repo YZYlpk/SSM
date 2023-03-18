@@ -101,6 +101,13 @@
             <scope>compile</scope>
         </dependency>
 
+        <!--热部署 不停服更新 改完代码后自动更新，不需要重启-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -108,6 +115,11 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                    <skip>true</skip>
+                    <addResources>true</addResources>
+                </configuration>
                 <!--                cmd命令行启动程序必备插件-->
                 <executions>
                     <execution>
