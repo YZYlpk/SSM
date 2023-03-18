@@ -17,7 +17,7 @@ mybatis-plus:
   type-aliases-package: com.itheima.mybatis_plus_generator.entity #实体类位置
   configuration:
     map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #输出sql日志到控制台
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #输出sql执行语句到控制台
   global-config:
     db-config:
       id-type: auto
@@ -28,4 +28,13 @@ mybatis-plus:
 #  type-aliases-package: com.itheima.mybatis_plus_generator.entity #实体类位置
 #  configuration:
 #    map-underscore-to-camel-case: true
+
+#设置日志模板格式
+logging:
+  file:
+    name: server.log     #命名输出日志文件
+  logback:
+    rolling policy:
+      max-file-size: 10MB   #设置日志最大容量
+      file-name-pattern: server.%d{yyyy-MM-dd}.%i.log #日志文件命名规则
 

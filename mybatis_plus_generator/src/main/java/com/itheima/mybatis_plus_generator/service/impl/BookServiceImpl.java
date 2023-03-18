@@ -12,6 +12,7 @@ import com.itheima.mybatis_plus_generator.exception.GlobalException;
 import com.itheima.mybatis_plus_generator.service.IBookService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -28,11 +29,14 @@ import java.util.stream.Collectors;
  * @author LiPeiKai
  * @since 2023-03-08
  */
+@Slf4j
 @Service
 public class BookServiceImpl extends ServiceImpl<BookDao, Book> implements IBookService {
     @Resource
     BookDao bookDao;
 
+    //添加日志记录操作,也可以直接加注解@Slf4j
+    //private static final Logger log= LoggerFactory.getLogger(BookServiceImpl.class);
 
     public  Map<String,Object> select(){
         Map<String,Object> map=new LinkedHashMap<>();
@@ -48,7 +52,8 @@ public class BookServiceImpl extends ServiceImpl<BookDao, Book> implements IBook
         List<Map<String, Object>> mapList = null;
         if (rsp.isEmpty())
         {
-            System.out.println("数据为空");
+            //System.out.println("数据为空");
+            log.error("数据为空");
             throw new GlobalException();
         }
         else {
@@ -95,11 +100,13 @@ public class BookServiceImpl extends ServiceImpl<BookDao, Book> implements IBook
         Integer result=bookDao.updateById(book);
         if(result.equals(1)) {
             str = "数据更新成功";
-            System.out.println(str);
+            //System.out.println(str);
+            log.info(str);
         }
         else if (result.equals(0)) {
             str = "数据更新失败";
-            System.out.println(str);
+            //System.out.println(str);
+            log.error(str);
             throw new GlobalException();
         }
     }
@@ -118,11 +125,13 @@ public class BookServiceImpl extends ServiceImpl<BookDao, Book> implements IBook
         Integer result=bookDao.update(book,updateWrapper);//第一个参数为set条件，第二个参数为where条件。
         if(result.equals(1)) {
             str = "数据更新成功";
-            System.out.println(str);
+            //System.out.println(str);
+            log.info(str);
         }
             else if (result.equals(0)) {
             str = "数据更新失败";
-            System.out.println(str);
+            //System.out.println(str);
+            log.error(str);
             throw new GlobalException();
         }
     }
@@ -130,14 +139,16 @@ public class BookServiceImpl extends ServiceImpl<BookDao, Book> implements IBook
     public Integer insert1(Book req){
         if(bookDao.selectOne(req.getId())!=null && !bookDao.selectOne(req.getId()).equals(""))
         {
-            System.err.println("id已被占用，数据插入失败");
+            //System.err.println("id已被占用，数据插入失败");
+            log.error("id已被占用，数据插入失败");
             return 0;
         }
         else
         {
             Integer integer = bookDao.insert1(req.getId(), req.getType(), req.getName(), req.getDescription());
             System.out.println(integer);
-            System.err.println("已插入数据");
+            //System.err.println("已插入数据");
+            log.info("已插入数据");
             return 1;
         }
 
@@ -147,7 +158,8 @@ public class BookServiceImpl extends ServiceImpl<BookDao, Book> implements IBook
         String str=null;
         if(bookDao.selectOne(req.getId())!=null && !bookDao.selectOne(req.getId()).equals("")){
             str="id已被占用，数据插入失败";
-            System.err.println(str);
+            //System.err.println(str);
+            log.error(str);
             throw new GlobalException();
         }
         else
@@ -157,7 +169,8 @@ public class BookServiceImpl extends ServiceImpl<BookDao, Book> implements IBook
             bookDao.insert(req);
             //System.out.println(req.getId());
             str="已插入数据";
-            System.err.println(str);
+            //System.err.println(str);
+            log.info(str);
         }
     }
 

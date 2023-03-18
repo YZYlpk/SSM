@@ -56,6 +56,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.20</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -100,6 +101,14 @@
                 <configuration>
                     <mainClass>top.jacktgq.SSMPApplication</mainClass>
                 </configuration>
+<!--                cmd命令行启动程序必备插件-->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 <!--项目如果很多人一起开发的，test文件很容易导致报错，于是跳过测试-->
                 <plugin>

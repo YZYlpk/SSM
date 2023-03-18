@@ -12,6 +12,7 @@ import com.itheima.mybatis_plus_generator.service.impl.BookServiceImpl;
 
 
 import com.itheima.mybatis_plus_generator.utils.R;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,7 @@ import java.util.Map;
  * @author LiPeiKai
  * @since 2023-03-08
  */
+@Slf4j
 @RestController
 @RequestMapping("/books")
 public class BookController {
@@ -46,6 +48,11 @@ public class BookController {
 
     @Resource
     IBookService iBookService;
+
+    //创建记录日志的对象
+    //private static final Logger log = LoggerFactory.getLogger(BookController.class);
+
+
     //输出数据库相关配置
     @GetMapping("/{id}")
     public String getById(@PathVariable Integer id){
